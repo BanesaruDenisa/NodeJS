@@ -415,4 +415,96 @@ router.post('/update/:id', validatePayload(productSchema), async (req, res) => {
   }
 });
 
+
+// /**
+//  * @swagger
+//  * tags:
+//  *   name: Produse
+//  *   description: Gestionarea produselor
+//  */
+
+// /**
+//  * @swagger
+//  * /produse:
+//  *   get:
+//  *     summary: Returnează o listă cu toate produsele, cu opțiuni de sortare și filtrare
+//  *     tags: [Produse]
+//  *     parameters:
+//  *       - in: query
+//  *         name: sort
+//  *         schema:
+//  *           type: string
+//  *           enum: [name, brand, rating]
+//  *         description: Câmpul după care se sortează
+//  *       - in: query
+//  *         name: order
+//  *         schema:
+//  *           type: string
+//  *           enum: [asc, desc]
+//  *         description: Ordinea de sortare (ascendentă sau descendentă)
+//  *       - in: query
+//  *         name: brand
+//  *         schema:
+//  *           type: string
+//  *         description: Filtrare după brand
+//  *       - in: query
+//  *         name: minRating
+//  *         schema:
+//  *           type: integer
+//  *         description: Filtrare după ratingul minim al recenziilor
+//  *     responses:
+//  *       200:
+//  *         description: O listă cu toate produsele
+//  *         content:
+//  *           application/json:
+//  *             schema:
+//  *               type: array
+//  *               items:
+//  *                 $ref: '#/components/schemas/Produs'
+//  *       500:
+//  *         description: Eroare server
+//  */
+// router.get('/', async (req, res) => {
+//   const { sort, order, brand, minRating } = req.query;
+//   let queryOptions = {
+//     include: [{
+//       model: db.Review,
+//       as: 'reviews'
+//     }]
+//   };
+
+//   // Adăugare filtrare
+//   if (brand) {
+//     queryOptions.where = {
+//       ...queryOptions.where,
+//       brand
+//     };
+//   }
+
+//   // Adăugare sortare
+//   if (sort) {
+//     queryOptions.order = [
+//       [sort, order || 'ASC']
+//     ];
+//   }
+
+//   // Adăugare filtrare după rating
+//   if (minRating) {
+//     queryOptions.include[0].where = {
+//       ...queryOptions.include[0].where,
+//       rating: {
+//         [db.Sequelize.Op.gte]: minRating
+//       }
+//     };
+//   }
+
+//   try {
+//     const produse = await db.Produs.findAll(queryOptions);
+//     res.status(200).json(produse);
+//   } catch (error) {
+//     console.error('Eroare la preluarea produselor:', error);
+//     res.status(500).send(error.message);
+//   }
+// });
+
 module.exports = router;

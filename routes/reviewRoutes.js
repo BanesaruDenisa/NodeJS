@@ -6,32 +6,32 @@ const { reviewSchema } = require('../validators/schemas');
 
 const router = express.Router();
 
-/**
- * @swagger
- * tags:
- *   name: Recenzii
- *  .description: Gestionarea recenziilor
- */
+// /**
+//  * @swagger
+//  * tags:
+//  *   name: Recenzii
+//  *   description: Gestionarea recenziilor
+//  */
 
-/**
- * @swagger
- * /recenzii:
- *   get:
- *     summary: Returnează o listă cu toate recenziile
- *     tags: [Recenzii]
- *     responses:
- *       200:
- *         description: O listă cu recenzii
- */
-router.get('/', authMiddleware, async (req, res) => {
-  try {
-    const recenzii = await db.Review.findAll();
-    res.json(recenzii);
-  } catch (error) {
-    console.error('Eroare la preluarea recenziilor:', error);
-    res.status(500).send(error.message);
-  }
-});
+// /**
+//  * @swagger
+//  * /recenzii:
+//  *   get:
+//  *     summary: Returnează o listă cu toate recenziile
+//  *     tags: [Recenzii]
+//  *     responses:
+//  *       200:
+//  *         description: O listă cu recenzii
+//  */
+// router.get('/', authMiddleware, async (req, res) => {
+//   try {
+//     const recenzii = await db.Review.findAll();
+//     res.json(recenzii);
+//   } catch (error) {
+//     console.error('Eroare la preluarea recenziilor:', error);
+//     res.status(500).send(error.message);
+//   }
+// });
 
 /**
  * @swagger
@@ -214,6 +214,84 @@ router.post('/', validatePayload(reviewSchema), async (req, res) => {
         res.status(404).send('Recenzie not found');
       }
     } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+
+
+/**
+ * @swagger
+ * tags:
+ *   name: Recenzii
+ *   description: Gestionarea recenziilor
+ */
+
+/**
+ * @swagger
+ * /recenzii:
+ *   get:
+ *     summary: Returnează o listă cu toate recenziile, cu opțiuni de sortare și filtrare
+ *     tags: [Recenzii]
+ *     parameters:
+ *       - in: query
+ *         name: sort
+ *         schema:
+ *           type: string
+ *           enum: [id, rating, createdAt]
+ *         description: Câmpul după care se sortează
+ *       - in: query
+ *         name: order
+ *         schema:
+ *           type: string
+ *           enum: [asc, desc]
+ *         description: Ordinea de sortare (ascendentă sau descendentă)
+ *       - in: query
+ *         name: minRating
+ *         schema:
+ *           type: integer
+ *         description: Filtrare după ratingul minim al recenziilor
+ *     responses:
+ *       200:
+ *         description: O listă cu toate recenziile
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Review'
+ *       500:
+ *         description: Eroare server
+ *     security:
+ *       - bearerAuth: []
+ */
+router.get('/', authMiddleware, async (req, res) => {
+    const { sort = 'id', order = 'ASC', minRating } = req.query;
+    console.log('Sort:', sort);
+    console.log('Order:', order);
+    console.log('MinRating:', minRating);
+  
+    let queryOptions = {
+      order: [
+        [sort, order.toUpperCase() === 'DESC' ? 'DESC' : 'ASC']
+      ]
+    };
+  
+    // Adăugare filtrare după rating
+    if (minRating) {
+      queryOptions.where = {
+        rating: {
+          [db.Sequelize.Op.gte]: minRating
+        }
+      };
+    }
+  
+    console.log('Query Options:', queryOptions);
+  
+    try {
+      const recenzii = await db.Review.findAll(queryOptions);
+      res.status(200).json(recenzii);
+    } catch (error) {
+      console.error('Eroare la preluarea recenziilor:', error);
       res.status(500).send(error.message);
     }
   });
