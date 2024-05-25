@@ -90,7 +90,7 @@ Delete Produs
 
 ### Recenzii 
 Get All Recenzii
-- **Endpoint: GET /recenzii** - returnează o listă cu toate recenziile.
+- **Endpoint: GET /recenzii** - Returnează o listă cu toate recenziile si exista opțiuni de sortare și filtrare.
 Get Recenzie by ID
 - **Endpoint: GET /recenzii/{id}** - returnează detalii despre o recenzie specifică.
 Create Recenzie
