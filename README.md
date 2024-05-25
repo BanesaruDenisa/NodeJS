@@ -106,7 +106,7 @@ Middleware-ul este aplicat pe rutele relevante pentru a valida payload-ul reques
 
 ## Diagrama Bazei de Date
 
-![alt text](./diagrama_baza.png)
+![alt text](../diagrama_baza.png)
 
 
 
