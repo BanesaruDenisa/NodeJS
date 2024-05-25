@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    title Recenzie
+  body
+    h1 Detalii Recenzie
+    p Conținut: #{recenzie.content}
+    p Rating: #{recenzie.rating}
+    p Produs ID: #{recenzie.produsId}
+    h2 Actualizează Recenzie
+    form(action=`/recenzii/update/${recenzie.id}`, method="POST")
+      textarea(name="content", placeholder="Conținut") #{recenzie.content}
+      input(type="number", name="rating", value=recenzie.rating, placeholder="Rating")
+      input(type="number", name="produsId", value=recenzie.produsId, placeholder="ID Produs")
+      button(type="submit") Actualizează Recenzie
+    a(href="/recenzii") Înapoi la Recenzii

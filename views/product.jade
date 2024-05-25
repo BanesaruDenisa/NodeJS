@@ -1,0 +1,19 @@
+// views/product.jade
+doctype html
+html
+  head
+    title Product
+  body
+    h1 Product Details
+    p Name: #{product.name}
+    p Brand: #{product.brand}
+    p Description: #{product.description}
+    p User ID: #{product.userId}
+    h2 Update Product
+    form(action=`/products/update/${product.id}`, method="POST")
+      input(type="text", name="name", value=product.name, placeholder="Name")
+      input(type="text", name="brand", value=product.brand, placeholder="Brand")
+      textarea(name="description", placeholder="Description") #{product.description}
+      input(type="number", name="userId", value=product.userId, placeholder="User ID")
+      button(type="submit") Update Product
+    a(href="/products") Back to Products

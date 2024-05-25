@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title Recenzii
+  body
+    h1 Recenzii
+    ul
+      each recenzie in recenzii
+        li
+          p #{recenzie.content} - Rating: #{recenzie.rating}
+          p Produs ID: #{recenzie.produsId}
+          a(href=`/recenzii/${recenzie.id}`) Vezi detalii
+          form(action=`/recenzii/delete/${recenzie.id}`, method="POST")
+            button(type="submit") Șterge
+    h2 Adaugă Recenzie
+    form(action="/recenzii", method="POST")
+      textarea(name="content", placeholder="Conținut")
+      input(type="number", name="rating", placeholder="Rating")
+      input(type="number", name="produsId", placeholder="ID Produs")
+      button(type="submit") Adaugă Recenzie

@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title Produse
+  body
+    h1 Produse
+    ul
+      each produs in produse
+        li
+          a(href=`/produse/${produs.id}`) #{produs.name}
+          form(action=`/produse/delete/${produs.id}`, method="POST")
+            button(type="submit") Șterge
+    h2 Adaugă Produs
+    form(action="/produse", method="POST")
+      input(type="text", name="name", placeholder="Nume")
+      input(type="text", name="brand", placeholder="Brand")
+      textarea(name="description", placeholder="Descriere")
+      input(type="number", name="furnizorId", placeholder="ID Furnizor")
+      button(type="submit") Adaugă Produs
