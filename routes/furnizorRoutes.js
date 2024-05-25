@@ -382,6 +382,8 @@
 const express = require('express');
 const db = require('../models');
 const authMiddleware = require('../middlewares/authMiddleware');
+const validatePayload = require('../middlewares/validatePayload');
+const { furnizorSchema } = require('../validators/schemas');
 
 const router = express.Router();
 
@@ -568,5 +570,28 @@ router.post('/delete/:id', authMiddleware, async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
+router.post('/', validatePayload(furnizorSchema), async (req, res) => {
+    try {
+      const furnizor = await db.Furnizor.create(req.body);
+      res.status(201).json(furnizor);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+  
+  router.post('/update/:id', validatePayload(furnizorSchema), async (req, res) => {
+    try {
+      const furnizor = await db.Furnizor.findByPk(req.params.id);
+      if (furnizor) {
+        await furnizor.update(req.body);
+        res.json(furnizor);
+      } else {
+        res.status(404).send('Furnizor not found');
+      }
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
 
 module.exports = router;

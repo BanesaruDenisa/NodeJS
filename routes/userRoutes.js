@@ -1,5 +1,7 @@
 const express = require('express');
 const db = require('../models');
+const validatePayload = require('../middlewares/validatePayload');
+const { userSchema } = require('../validators/schemas');
 
 const router = express.Router();
 
@@ -176,6 +178,30 @@ router.post('/delete/:id', async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
+
+router.post('/', validatePayload(userSchema), async (req, res) => {
+    try {
+      const user = await db.User.create(req.body);
+      res.status(201).json(user);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+  
+  router.post('/update/:id', validatePayload(userSchema), async (req, res) => {
+    try {
+      const user = await db.User.findByPk(req.params.id);
+      if (user) {
+        await user.update(req.body);
+        res.json(user);
+      } else {
+        res.status(404).send('User not found');
+      }
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
 
 module.exports = router;
 

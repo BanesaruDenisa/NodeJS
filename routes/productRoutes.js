@@ -198,6 +198,8 @@
 const express = require('express');
 const db = require('../models');
 const authMiddleware = require('../middlewares/authMiddleware');
+const validatePayload = require('../middlewares/validatePayload');
+const { productSchema } = require('../validators/schemas');
 
 const router = express.Router();
 
@@ -386,6 +388,29 @@ router.post('/delete/:id', authMiddleware, async (req, res) => {
     }
   } catch (error) {
     console.error('Eroare la ștergerea produsului:', error);
+    res.status(500).send(error.message);
+  }
+});
+
+router.post('/', validatePayload(productSchema), async (req, res) => {
+  try {
+    const produs = await db.Product.create(req.body);
+    res.status(201).json(produs);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+router.post('/update/:id', validatePayload(productSchema), async (req, res) => {
+  try {
+    const produs = await db.Product.findByPk(req.params.id);
+    if (produs) {
+      await produs.update(req.body);
+      res.json(produs);
+    } else {
+      res.status(404).send('Produs not found');
+    }
+  } catch (error) {
     res.status(500).send(error.message);
   }
 });

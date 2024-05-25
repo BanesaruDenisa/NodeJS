@@ -1,6 +1,8 @@
 const express = require('express');
 const db = require('../models');
 const authMiddleware = require('../middlewares/authMiddleware');
+const validatePayload = require('../middlewares/validatePayload');
+const { reviewSchema } = require('../validators/schemas');
 
 const router = express.Router();
 
@@ -192,5 +194,28 @@ router.post('/delete/:id', authMiddleware, async (req, res) => {
     res.status(500).send(error.message);
   }
 });
+
+router.post('/', validatePayload(reviewSchema), async (req, res) => {
+    try {
+      const recenzie = await db.Review.create(req.body);
+      res.status(201).json(recenzie);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
+  
+  router.post('/update/:id', validatePayload(reviewSchema), async (req, res) => {
+    try {
+      const recenzie = await db.Review.findByPk(req.params.id);
+      if (recenzie) {
+        await recenzie.update(req.body);
+        res.json(recenzie);
+      } else {
+        res.status(404).send('Recenzie not found');
+      }
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  });
 
 module.exports = router;
