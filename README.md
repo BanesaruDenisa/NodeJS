@@ -54,52 +54,51 @@ Descriere: Autentifică un utilizator existent și returnează un token JWT.
 
 ### Utilizatori (Users)
 Get All Users
-Endpoint: GET /users - returnează o listă cu toți utilizatorii.
+- **Endpoint: GET /users** - returnează o listă cu toți utilizatorii.
 Get User by ID
-Endpoint: GET /users/{id} - returnează detalii despre un utilizator specific.
+- **Endpoint: GET /users/{id}** - returnează detalii despre un utilizator specific.
 Create User
-Endpoint: POST /users - creează un nou utilizator.
+- **Endpoint: POST /users** - creează un nou utilizator.
 Update User
-Endpoint: POST /users/update/{id} - actualizează detaliile unui utilizator existent.
+- **Endpoint: POST /users/update/{id}** - actualizează detaliile unui utilizator existent.
 Delete User
-Endpoint: POST /users/delete/{id} - sterge un utilizator din sistem.
+- **Endpoint: POST /users/delete/{id}** - sterge un utilizator din sistem.
 
 ### Furnizori 
 Get All Furnizori
-Endpoint: GET /furnizori - returnează o listă cu toți furnizorii.
+- **Endpoint: GET /furnizori** - returnează o listă cu toți furnizorii.
 Get Furnizor by ID
-Endpoint: GET /furnizori/{id} - returnează detalii despre un furnizor specific.
+- **Endpoint: GET /furnizori/{id}** - returnează detalii despre un furnizor specific.
 Create Furnizor
-Endpoint: POST /furnizori - creează un nou furnizor
+- **Endpoint: POST /furnizori** - creează un nou furnizor
 Update Furnizor
-Endpoint: POST /furnizori/update/{id} - actualizează detaliile unui furnizor existent.
+- **Endpoint: POST /furnizori/update/{id}** - actualizează detaliile unui furnizor existent.
 Delete Furnizor
-Endpoint: POST /furnizori/delete/{id} - sterge un furnizor din sistem.
+- **Endpoint: POST /furnizori/delete/{id}** - sterge un furnizor din sistem.
 
 ### Produse 
 Get All Produse
-Endpoint: GET /produse - returnează o listă cu toate produsele.
+- **Endpoint: GET /produse** - returnează o listă cu toate produsele.
 Get Produs by ID
-Endpoint: GET /produse/{id} - returnează detalii despre un produs specific.
+- **Endpoint: GET /produse/{id}** - returnează detalii despre un produs specific.
 Create Produs
-Endpoint: POST /produse - creează un nou produs.
+- **Endpoint: POST /produse** - creează un nou produs.
 Update Produs
-Endpoint: POST /produse/update/{id} - actualizează detaliile unui produs existent.
+- **Endpoint: POST /produse/update/{id}** - actualizează detaliile unui produs existent.
 Delete Produs
-Endpoint: POST /produse/delete/{id} - sterge un produs din sistem.
+- **Endpoint: POST /produse/delete/{id}** - sterge un produs din sistem.
 
 ### Recenzii 
 Get All Recenzii
-Endpoint: GET /recenzii - returnează o listă cu toate recenziile.
+- **Endpoint: GET /recenzii** - returnează o listă cu toate recenziile.
 Get Recenzie by ID
-Endpoint: GET /recenzii/{id} - returnează detalii despre o recenzie specifică.
+- **Endpoint: GET /recenzii/{id}** - returnează detalii despre o recenzie specifică.
 Create Recenzie
-Endpoint: POST /recenzii - creează o nouă recenzie.
-
+- **Endpoint: POST /recenzii** - creează o nouă recenzie.
 Update Recenzie
-Endpoint: POST /recenzii/update/{id} - actualizează detaliile unei recenzii existente.
+- **Endpoint: POST /recenzii/update/{id}** - actualizează detaliile unei recenzii existente.
 Delete Recenzie
-Endpoint: POST /recenzii/delete/{id} -  sterge o recenzie din sistem.
+- **Endpoint: POST /recenzii/delete/{id}**  -  sterge o recenzie din sistem.
 
  ### Middleware de Validare
 Middleware-ul validatePayload este utilizat pentru a valida payload-ul request-ului folosind fiecare schema definită cu Joi.
@@ -107,7 +106,7 @@ Middleware-ul este aplicat pe rutele relevante pentru a valida payload-ul reques
 
 ## Diagrama Bazei de Date
 
-![alt text](../diagrama_baza.png)
+![alt text](./diagrama_baza.png)
 
 
 
