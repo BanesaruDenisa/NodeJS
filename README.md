@@ -40,7 +40,8 @@ npm start
 **Signup**
 Endpoint: POST /auth/signup
 Descriere: Creează un nou utilizator.
-    ```javascript
+
+```javascript
 {
   "email": "email@exemplu.com",
   "password": "parola"
